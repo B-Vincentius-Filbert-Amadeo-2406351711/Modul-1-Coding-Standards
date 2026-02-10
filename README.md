@@ -8,12 +8,10 @@ One mistake I encountered was the lack of ID generation for new products, which 
 
 ## Reflection 2
 
-### Unit Testing and Code Coverage
 Writing unit tests gives me confidence that my code works as expected and helps protect against regressions. The number of unit tests in a class should be sufficient to cover all distinct paths and edge cases, but there isn't a fixed "magic number." 100% code coverage does *not* guarantee bug-free code; it only means all lines were executed. Logic errors could still exist even if the code is covered.
 
-### Functional Test Clean Code
 If we create a new functional test suite with the same setup procedures and instance variables, we would violate the **DRY (Don't Repeat Yourself)** principle. This code duplication reduces code quality because:
-1.  **Maintenance**: If the setup logic changes (e.g., base URL or port configuration), we must update it in multiple places.
-2.  **Readability**: The core logic of the test is cluttered with repetitive setup code.
+1.  Maintenance - If the setup logic changes (e.g., base URL or port configuration), we must update it in multiple places.
+2.  Readability - The core logic of the test is cluttered with repetitive setup code.
 
-**Improvement Suggestion**: Create a base test class (e.g., `BaseFunctionalTest`) that handles the common setup (server port, base URL, WebDriver configuration). Concrete test classes can then extend this base class and focus solely on specific test scenarios.
+For suggestion, we can just create a base test class (e.g., `BaseFunctionalTest`) that handles the common setup (server port, base URL, WebDriver configuration). Concrete test classes can then extend this base class and focus solely on specific test scenarios.
