@@ -29,6 +29,8 @@
                     <td>
                         <a th:href="@{/product/edit/{productId}(productId=${product.productId})}"
                             class="btn btn-sm btn-primary">Edit</a>
+                        <a th:href="@{/product/delete/{productId}(productId=${product.productId})}"
+                            class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
             </tbody>
