@@ -8,8 +8,6 @@ group = "id.ac.ui.cs.advprog"
 version = "0.0.1-SNAPSHOT"
 description = "eshop"
 
-
-
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
