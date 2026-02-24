@@ -2,6 +2,8 @@ package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductService service;
@@ -45,7 +48,7 @@ public class ProductController {
 
     @PostMapping("/edit")
     public String editProductPost(@ModelAttribute Product product, Model model) {
-        System.out.println(product.getProductId());
+        logger.info("Editing product with id {}", product.getProductId());
         service.update(product.getProductId(), product);
         return "redirect:list";
     }
