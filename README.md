@@ -28,3 +28,33 @@ My strategy was to apply behavior-preserving refactors that match each rule inte
 The current setup already meets Continuous Integration well. The repository runs automated tests on pushes and pull requests through `.github/workflows/ci.yml`, and runs code-quality/security analysis through `.github/workflows/sonarcloud.yml` and `.github/workflows/scorecard.yml`. This provides frequent, automated feedback on build health and quality status.
 
 For Continuous Deployment, I have already set up the automatic deployment too. I deployed this project to Koyeb, which will then fetch info about push to my main branch periodically and automating the build and deploy process automatically. That specific pipeline is not visible on Github Actions because Koyeb is pull based, not push based. Link to deployment is available at the top of this README.
+
+## Reflection 4
+
+### 1) Explain what principles you apply to your project
+
+I applied SRP by separating `CarController`, `CarService`, and `CarRepository` responsibilities. Controller handles web flow, service handles application logic, and repository handles persistence details.
+
+I applied OCP by introducing `CarFilter` and `findByFilter` in `CarService`. New filtering behavior can be added by creating new filter classes without changing service core flow.
+
+I applied LSP through repository abstraction (`CarRepository`) with interchangeable implementation (`InMemoryCarRepository`) while keeping behavior contract consistent.
+
+I applied ISP by splitting service contracts into `CarCommandService` and `CarQueryService`, then composing them in `CarService`.
+
+I applied DIP by making `CarServiceImpl` depend on `CarRepository` abstraction instead of concrete storage class.
+
+### 2) Explain the advantages of applying SOLID principles to your project with examples
+
+The code becomes easier to extend. For example, adding a new car search criterion only needs a new class implementing `CarFilter`, not changes in controller or repository code.
+
+The code becomes easier to test and maintain. `CarServiceImpl` can be tested with mocked `CarRepository` because dependencies are abstracted.
+
+The code becomes safer for future changes. Splitting command and query interfaces prevents clients from depending on methods they do not need.
+
+### 3) Explain the disadvantages of not applying SOLID principles to your project with examples
+
+Without SRP, a controller that also handles business and storage logic becomes hard to change because one edit can break multiple concerns.
+
+Without OCP and DIP, every new requirement can force editing existing classes directly, increasing regression risk. For example, adding new filtering rules would require modifying service internals repeatedly.
+
+Without ISP and LSP, modules become tightly coupled to bulky contracts or non-substitutable implementations, making refactoring and swapping implementations much harder.
