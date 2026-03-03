@@ -31,30 +31,30 @@ For Continuous Deployment, I have already set up the automatic deployment too. I
 
 ## Reflection 4
 
-### 1) Explain what principles you apply to your project
+### 1. Explain what principles you apply to your project
 
-I applied SRP by separating `CarController`, `CarService`, and `CarRepository` responsibilities. Controller handles web flow, service handles application logic, and repository handles persistence details.
+a. I applied SRP by separating `CarController`, `CarService`, and `CarRepository` responsibilities. Controller handles web flow, service handles application logic, and repository handles persistence details.
 
-I applied OCP by introducing `CarFilter` and `findByFilter` in `CarService`. New filtering behavior can be added by creating new filter classes without changing service core flow.
+b. I applied OCP by introducing `CarFilter` and `findByFilter` in `CarService`. New filtering behavior can be added by creating new filter classes without changing service core flow.
 
-I applied LSP through repository abstraction (`CarRepository`) with interchangeable implementation (`InMemoryCarRepository`) while keeping behavior contract consistent.
+c. I applied LSP through repository abstraction (`CarRepository`) with interchangeable implementation (`InMemoryCarRepository`) while keeping behavior contract consistent.
 
-I applied ISP by splitting service contracts into `CarCommandService` and `CarQueryService`, then composing them in `CarService`.
+d. I applied ISP by splitting service contracts into `CarCommandService` and `CarQueryService`, then composing them in `CarService`.
 
-I applied DIP by making `CarServiceImpl` depend on `CarRepository` abstraction instead of concrete storage class.
+e. I applied DIP by making `CarServiceImpl` depend on `CarRepository` abstraction instead of concrete storage class.
 
-### 2) Explain the advantages of applying SOLID principles to your project with examples
+### 2. Explain the advantages of applying SOLID principles to your project with examples
 
-The code becomes easier to extend. For example, adding a new car search criterion only needs a new class implementing `CarFilter`, not changes in controller or repository code.
+a. The code becomes easier to extend. For example, adding a new car search criterion only needs a new class implementing `CarFilter`, not changes in controller or repository code.
 
-The code becomes easier to test and maintain. `CarServiceImpl` can be tested with mocked `CarRepository` because dependencies are abstracted.
+b. The code becomes easier to test and maintain. `CarServiceImpl` can be tested with mocked `CarRepository` because dependencies are abstracted.
 
-The code becomes safer for future changes. Splitting command and query interfaces prevents clients from depending on methods they do not need.
+c. The code becomes safer for future changes. Splitting command and query interfaces prevents clients from depending on methods they do not need.
 
-### 3) Explain the disadvantages of not applying SOLID principles to your project with examples
+### 3. Explain the disadvantages of not applying SOLID principles to your project with examples
 
-Without SRP, a controller that also handles business and storage logic becomes hard to change because one edit can break multiple concerns.
+a. Without SRP, a controller that also handles business and storage logic becomes hard to change because one edit can break multiple concerns.
 
-Without OCP and DIP, every new requirement can force editing existing classes directly, increasing regression risk. For example, adding new filtering rules would require modifying service internals repeatedly.
+b. Without OCP and DIP, every new requirement can force editing existing classes directly, increasing regression risk. For example, adding new filtering rules would require modifying service internals repeatedly.
 
-Without ISP and LSP, modules become tightly coupled to bulky contracts or non-substitutable implementations, making refactoring and swapping implementations much harder.
+c. Without ISP and LSP, modules become tightly coupled to bulky contracts or non-substitutable implementations, making refactoring and swapping implementations much harder.
