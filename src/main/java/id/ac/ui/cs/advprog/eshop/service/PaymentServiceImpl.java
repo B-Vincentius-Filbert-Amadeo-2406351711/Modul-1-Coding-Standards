@@ -17,21 +17,33 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
-        return null;
+        Payment payment = new Payment(order.getId(), method, paymentData);
+        return paymentRepository.save(payment);
     }
 
     @Override
     public Payment setStatus(Payment payment, String status) {
-        return null;
+        Payment searchedPayment = paymentRepository.findById(payment.getId());
+        if (searchedPayment != null) {
+            Payment newPayment = new Payment(payment.getId(), payment.getMethod(), payment.getPaymentData(), status);
+            return paymentRepository.save(newPayment);
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
     public Payment getPayment(String paymentId) {
-        return null;
+        Payment payment = paymentRepository.findById(paymentId);
+        if (payment != null) {
+            return payment;
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
     public List<Payment> getAllPayments() {
-        return null;
+        return paymentRepository.findAll();
     }
 }
